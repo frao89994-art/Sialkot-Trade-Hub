@@ -52,4 +52,29 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     ?.scrollIntoView({behavior:"smooth"});
   });
 });
+/* ================= CONTACT US → WHATSAPP FEEDBACK ================= */
+function sendMessage(){
+
+  let name  = document.getElementById("name").value.trim();
+  let email = document.getElementById("email").value.trim();
+  let msg   = document.getElementById("msg").value.trim();
+
+  if(name==="" || email==="" || msg===""){
+    alert("Please fill all fields");
+    return;
+  }
+
+  let feedbackText =
+    "📩 *New Feedback Received* \n\n" +
+    "👤 Name: " + name + "\n" +
+    "📧 Email: " + email + "\n" +
+    "💬 Message: " + msg + "\n\n" +
+    "📍 Source: Sialkot Trade Hub Website";
+
+  let whatsappURL =
+    "https://wa.me/923042249321?text=" +
+    encodeURIComponent(feedbackText);
+
+  window.open(whatsappURL, "_blank");
+}
 
