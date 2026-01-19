@@ -50,4 +50,45 @@ button{
   border:none;
   cursor:pointer;
 }
+/* ================= CONTACT FORM ================= */
+form{
+  max-width:500px;
+  margin:auto;
+}
+input, textarea, button{
+  width:100%;
+  padding:12px;
+  margin:8px 0;
+  border-radius:6px;
+  border:1px solid #ccc;
+  font-family:Arial;
+}
+button{
+  background:#0b3c5d;
+  color:#fff;
+  border:none;
+  cursor:pointer;
+  font-weight:bold;
+}
+button:hover{
+  opacity:0.9;
+}
+
+/* ================= WHATSAPP FLOATING BUTTON ================= */
+.whatsapp{
+  position:fixed;
+  bottom:20px;
+  right:20px;
+  background:#25D366;
+  color:white;
+  font-size:26px;
+  padding:14px 16px;
+  border-radius:50%;
+  text-decoration:none;
+  box-shadow:0 6px 18px rgba(0,0,0,.3);
+  z-index:999;
+}
+.whatsapp:hover{
+  transform:scale(1.05);
+}
 
