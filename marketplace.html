@@ -1,26 +1,56 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Marketplace</title>
-<link rel="stylesheet" href="style.css">
+<title>Products | Sialkot Trade Hub</title>
+<style>
+body{font-family:Arial;margin:0;background:#f4f4f4;}
+header,footer{background:#0b3c5d;color:white;text-align:center;padding:15px;}
+nav{background:#133b5c;padding:10px;text-align:center;}
+nav a{color:white;margin:0 10px;text-decoration:none;}
+.products{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+  gap:15px;
+  padding:20px;
+}
+.card{
+  background:white;
+  padding:15px;
+  border-radius:8px;
+  text-align:center;
+}
+</style>
 </head>
+
 <body>
 
-<h2>Products Made in Sialkot</h2>
+<script>
+if(!localStorage.getItem("user")){
+  window.location.href="index.html";
+}
+</script>
 
-<div class="cards">
-<div class="card">Football</div>
-<div class="card">Cricket Bat</div>
-<div class="card">Gloves</div>
-<div class="card">Sports T-Shirt</div>
-<div class="card">Hoodie</div>
-<div class="card">Track Suit</div>
-<div class="card">Socks</div>
-<div class="card">Gym Wear</div>
+<header>
+<h2>Sialkot Trade Hub</h2>
+<p>Products</p>
+</header>
+
+<nav>
+<a href="index.html">Home</a>
+<a href="marketplace.html">Products</a>
+<a href="order.html">Order</a>
+</nav>
+
+<div class="products">
+<div class="card">🏏 Cricket Bats</div>
+<div class="card">⚽ Footballs</div>
+<div class="card">🥊 Boxing Gloves</div>
+<div class="card">👕 Hosiery Items</div>
+<div class="card">🧤 Gloves</div>
+<div class="card">🧦 Socks</div>
 </div>
 
-<a href="order.html"><button>Order Now</button></a>
+<footer>© 2026 Sialkot Trade Hub</footer>
 
 </body>
 </html>
-
