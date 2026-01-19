@@ -49,12 +49,18 @@ button{background:#0b3c5d;color:white;border:none;font-weight:bold;cursor:pointe
 .menu div:hover{background:#eee}
 
 /* SECTIONS */
-.section{padding:40px;background:white;margin-top:10px}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:20px}
+.section{padding:50px;background:white;margin-top:10px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:20px}
 .card{
-  border:1px solid #ddd;padding:15px;
-  border-radius:10px;background:#fafafa;text-align:center
+  border:1px solid #ddd;padding:18px;
+  border-radius:12px;background:#fafafa;text-align:center
 }
+.card h3{color:#0b3c5d}
+.hero{
+  background:#0b3c5d;color:white;
+  padding:70px 20px;text-align:center
+}
+.hero p{max-width:700px;margin:auto;font-size:18px}
 </style>
 </head>
 
@@ -65,25 +71,19 @@ button{background:#0b3c5d;color:white;border:none;font-weight:bold;cursor:pointe
 <div class="auth-box">
 <h2 id="authTitle">Sign In</h2>
 
-<!-- LOGIN -->
 <div id="loginForm">
 <input id="lemail" placeholder="Email">
-
 <div class="field">
 <input id="lpass" type="password" placeholder="Password">
 <span onclick="togglePass('lpass')">👁</span>
 </div>
-
 <div class="forgot" onclick="forgot()">Forgot password?</div>
 <button onclick="login()">Sign In</button>
 </div>
 
-<!-- SIGNUP -->
 <div id="signupForm" style="display:none">
 <input id="name" placeholder="Full Name">
 <input id="email" placeholder="Email">
-
-<!-- ✅ PROFILE IMAGE -->
 <label style="font-size:13px">Profile Picture</label>
 <input type="file" id="profilePic" accept="image/*">
 
@@ -111,9 +111,8 @@ button{background:#0b3c5d;color:white;border:none;font-weight:bold;cursor:pointe
 
 <!-- ACCOUNT -->
 <div class="account" id="account" onclick="toggleMenu()">
-<img id="accImg" src="">
+<img id="accImg">
 <span>My Account ▾</span>
-
 <div class="menu" id="menu">
   <div onclick="location.href='factory-dashboard.html'">Factory Dashboard</div>
   <div onclick="location.href='marketplace.html'">Marketplace</div>
@@ -125,81 +124,103 @@ button{background:#0b3c5d;color:white;border:none;font-weight:bold;cursor:pointe
 <!-- WEBSITE -->
 <div id="site">
 
-<header style="background:#0b3c5d;color:white;padding:20px;text-align:center">
+<header class="hero">
 <h1>Sialkot Trade Hub</h1>
-<p>Sports & Hosiery Marketplace – Made in Sialkot</p>
-
-<div style="margin-top:10px">
-<a href="marketplace.html" style="color:white;margin:0 10px">Marketplace</a>
-<a href="faq.html" style="color:white;margin:0 10px">FAQ</a>
-</div>
+<p>Global Sports & Hosiery Export Marketplace – Trusted Manufacturers of Pakistan</p>
 </header>
 
+<!-- SPORTS -->
 <div class="section">
-<h2>Welcome</h2>
-<p>Login successful. Your profile image is shown in account menu.</p>
+<h2>Sports Products</h2>
+<div class="grid">
+<div class="card"><h3>Footballs</h3><p>FIFA Approved Match & Training Balls</p></div>
+<div class="card"><h3>Cricket Equipment</h3><p>Bats, Pads, Gloves, Helmets</p></div>
+<div class="card"><h3>Boxing Gear</h3><p>Gloves, Punching Bags, Protection</p></div>
+<div class="card"><h3>Fitness Items</h3><p>Gym Gloves, Skipping Ropes, Belts</p></div>
+<div class="card"><h3>Martial Arts</h3><p>Karate, MMA, Taekwondo Equipment</p></div>
+</div>
 </div>
 
-<footer style="background:#0b3c5d;color:white;text-align:center;padding:10px">
-© 2026 Sialkot Trade Hub
+<!-- HOSIERY -->
+<div class="section">
+<h2>Hosiery Products</h2>
+<div class="grid">
+<div class="card"><h3>T-Shirts</h3><p>Cotton, Polyester, Custom Printing</p></div>
+<div class="card"><h3>Tracksuits</h3><p>Sports & Casual Wear</p></div>
+<div class="card"><h3>Hoodies</h3><p>Winter Wear Export Quality</p></div>
+<div class="card"><h3>Gloves</h3><p>Working & Winter Gloves</p></div>
+<div class="card"><h3>Sports Uniforms</h3><p>Teams & Clubs Custom Designs</p></div>
+</div>
+</div>
+
+<!-- WHY -->
+<div class="section">
+<h2>Why Choose Us?</h2>
+<div class="grid">
+<div class="card"><h3>✔ Verified Factories</h3></div>
+<div class="card"><h3>✔ Export Quality</h3></div>
+<div class="card"><h3>✔ Worldwide Shipping</h3></div>
+<div class="card"><h3>✔ Secure Deals</h3></div>
+</div>
+</div>
+
+<!-- HOW IT WORKS -->
+<div class="section">
+<h2>How It Works</h2>
+<div class="grid">
+<div class="card"><h3>1. Sign Up</h3><p>Create buyer or factory account</p></div>
+<div class="card"><h3>2. Explore</h3><p>Browse products & factories</p></div>
+<div class="card"><h3>3. Contact</h3><p>Direct WhatsApp & Email</p></div>
+<div class="card"><h3>4. Deal</h3><p>Finalize export orders</p></div>
+</div>
+</div>
+
+<!-- SUPPORT -->
+<div class="section">
+<h2>Support & Contact</h2>
+<div class="grid">
+<div class="card"><h3>Muhammad Tahir</h3><p>Founder & Admin<br>0304-2249321</p></div>
+<div class="card"><h3>Technical Support</h3><p>Website & Login Help</p></div>
+<div class="card"><h3>Factory Support</h3><p>Profile & Product Listing</p></div>
+<div class="card"><h3>Customer Care</h3><p>Orders & Marketplace</p></div>
+</div>
+</div>
+
+<footer style="background:#0b3c5d;color:white;text-align:center;padding:15px">
+© 2026 Sialkot Trade Hub – Made in Pakistan 🇵🇰
 </footer>
 
 </div>
 
 <script>
 let signupMode=false,currentUser=null;
-
 if(localStorage.getItem("user")){
-  currentUser=JSON.parse(localStorage.getItem("user"));
-  unlock();
+currentUser=JSON.parse(localStorage.getItem("user"));unlock();
 }
-
-function toggle(){
-  signupMode=!signupMode;
-  loginForm.style.display=signupMode?"none":"block";
-  signupForm.style.display=signupMode?"block":"none";
-  authTitle.innerText=signupMode?"Create Account":"Sign In";
-}
-
-function togglePass(id){
-  let f=document.getElementById(id);
-  f.type=f.type==="password"?"text":"password";
-}
-
+function toggle(){signupMode=!signupMode;
+loginForm.style.display=signupMode?"none":"block";
+signupForm.style.display=signupMode?"block":"none";
+authTitle.innerText=signupMode?"Create Account":"Sign In";}
+function togglePass(id){let f=document.getElementById(id);
+f.type=f.type==="password"?"text":"password";}
 function signup(){
-  if(pass.value!==cpass.value){alert("Password mismatch");return;}
-
-  let reader=new FileReader();
-  reader.onload=function(){
-    let user={
-      email:email.value,
-      pass:pass.value,
-      role:role.value,
-      img:reader.result
-    };
-    localStorage.setItem("user",JSON.stringify(user));
-    currentUser=user;
-    unlock();
-  };
-  reader.readAsDataURL(profilePic.files[0]);
+if(pass.value!==cpass.value){alert("Password mismatch");return;}
+let r=new FileReader();
+r.onload=function(){
+let u={email:email.value,pass:pass.value,role:role.value,img:r.result};
+localStorage.setItem("user",JSON.stringify(u));currentUser=u;unlock();}
+r.readAsDataURL(profilePic.files[0]);
 }
-
 function login(){
-  let u=JSON.parse(localStorage.getItem("user"));
-  if(!u||u.email!==lemail.value||u.pass!==lpass.value){
-    alert("Wrong login");return;
-  }
-  currentUser=u;
-  unlock();
+let u=JSON.parse(localStorage.getItem("user"));
+if(!u||u.email!==lemail.value||u.pass!==lpass.value){
+alert("Wrong login");return;}
+currentUser=u;unlock();
 }
-
 function unlock(){
-  auth.style.display="none";
-  site.style.display="block";
-  account.style.display="flex";
-  accImg.src=currentUser.img || "";
+auth.style.display="none";site.style.display="block";
+account.style.display="flex";accImg.src=currentUser.img||"";
 }
-
 function forgot(){alert("Password reset demo")}
 function logout(){localStorage.clear();location.reload()}
 function toggleMenu(){menu.style.display=menu.style.display==="block"?"none":"block"}
