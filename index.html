@@ -155,9 +155,10 @@ footer{
 <!-- ================= AUTH ================= -->
 <div class="auth" id="auth">
 <div class="auth-box">
-<h2 id="authTitle">Sign In</h2>
+<h2 id="authTitle">Create Account</h2>
 
-<div id="loginForm">
+<!-- LOGIN -->
+<div id="loginForm" style="display:none">
 <input id="lemail" placeholder="Email">
 <div class="field">
 <input id="lpass" type="password" placeholder="Password">
@@ -165,9 +166,11 @@ footer{
 </div>
 <div class="forgot">Forgot password?</div>
 <button onclick="login()">Login</button>
+<div class="switch" onclick="toggle()">Create Account</div>
 </div>
 
-<div id="signupForm" style="display:none">
+<!-- SIGNUP -->
+<div id="signupForm">
 <input id="name" placeholder="Full Name">
 <input id="email" placeholder="Email">
 
@@ -184,10 +187,10 @@ footer{
 <span onclick="togglePass('cpass')">👁</span>
 </div>
 
-<button onclick="signup()">login</button>
+<button onclick="signup()">Create Account</button>
+<div class="switch" onclick="toggle()">I already have an account? Login</div>
 </div>
 
-<div class="switch" onclick="toggle()">Create Accoun</div>
 </div>
 </div>
 
@@ -267,14 +270,14 @@ footer{
 </section>
 
 <footer>
-© 2026 Sialkot Trade Hub 🇵🇰
-  made in sailkot
+© 2026 Sialkot Trade Hub 🇵🇰<br>
+Made in Sialkot
 </footer>
 
 </div>
 
 <script>
-let signupMode=false;
+let signupMode=true;
 let currentUser=null;
 
 if(localStorage.getItem("user")){
@@ -286,7 +289,7 @@ function toggle(){
   signupMode=!signupMode;
   loginForm.style.display=signupMode?"none":"block";
   signupForm.style.display=signupMode?"block":"none";
-  authTitle.innerText=signupMode?"Create Account":"Sign In";
+  authTitle.innerText=signupMode?"Create Account":"Login";
 }
 
 function togglePass(id){
