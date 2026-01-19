@@ -4,99 +4,67 @@
 <title>Sialkot Trade Hub</title>
 
 <style>
-body{
-  font-family:Arial;
-  margin:0;
-  background:#f5f6f8;
-}
+body{font-family:Arial;margin:0;background:#f5f6f8}
 #site{display:none}
 
-/* LOGIN WRAPPER */
-.auth{
-  position:fixed; inset:0;
-  background:white;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  z-index:999;
-}
-.auth-box{
-  width:380px;
-  background:white;
-  padding:25px;
-  border-radius:12px;
-  box-shadow:0 10px 30px rgba(0,0,0,.1);
-}
-h2{text-align:center;margin-bottom:15px}
+/* AUTH */
+.auth{position:fixed;inset:0;background:white;display:flex;justify-content:center;align-items:center;z-index:999}
+.auth-box{width:380px;padding:25px;border-radius:12px;box-shadow:0 10px 30px rgba(0,0,0,.15)}
+h2{text-align:center}
 
 input,select,button{
-  width:100%;
-  padding:10px;
-  margin:8px 0;
-  border-radius:6px;
-  border:1px solid #ccc;
+  width:100%;padding:10px;margin:8px 0;
+  border-radius:6px;border:1px solid #ccc
 }
-button{
-  background:#0b3c5d;
-  color:white;
-  border:none;
-  cursor:pointer;
-  font-weight:bold;
-}
-.switch{
-  text-align:center;
-  margin-top:10px;
-  color:#0b3c5d;
-  cursor:pointer;
-}
-.forgot{
-  text-align:right;
-  font-size:13px;
-  color:#0b3c5d;
-  cursor:pointer;
+button{background:#0b3c5d;color:white;border:none;font-weight:bold;cursor:pointer}
+
+.field{position:relative}
+.field span{
+  position:absolute;right:10px;top:50%;
+  transform:translateY(-50%);
+  cursor:pointer;color:#0b3c5d
 }
 
-/* ACCOUNT MENU */
+.switch{text-align:center;color:#0b3c5d;cursor:pointer}
+.forgot{text-align:right;font-size:13px;color:#0b3c5d;cursor:pointer}
+
+/* ACCOUNT */
 .account{
-  position:fixed;
-  top:10px; right:10px;
-  background:#0b3c5d;
-  color:white;
-  padding:10px 15px;
-  border-radius:20px;
-  cursor:pointer;
-  display:none;
+  position:fixed;top:10px;right:10px;
+  background:#0b3c5d;color:white;
+  padding:10px 15px;border-radius:20px;
+  cursor:pointer;display:none
 }
 .menu{
-  display:none;
-  position:absolute;
-  right:0; top:40px;
-  background:white;
-  color:black;
-  border-radius:8px;
-  box-shadow:0 5px 20px rgba(0,0,0,.2);
+  display:none;position:absolute;right:0;top:40px;
+  background:white;color:black;border-radius:8px;
+  box-shadow:0 5px 20px rgba(0,0,0,.2)
 }
-.menu div{
-  padding:10px 15px;
-  cursor:pointer;
-}
+.menu div{padding:10px 15px;cursor:pointer}
 .menu div:hover{background:#eee}
 
-/* MODALS */
+/* SECTIONS */
+.section{padding:40px;background:white;margin-top:10px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:20px}
+.card{
+  border:1px solid #ddd;padding:15px;
+  border-radius:10px;background:#fafafa;text-align:center
+}
+.card img{
+  width:100%;height:140px;
+  object-fit:cover;border-radius:8px
+}
+
+/* MODAL */
 .modal{
-  display:none;
-  position:fixed; inset:0;
-  background:rgba(0,0,0,.4);
-  justify-content:center;
-  align-items:center;
+  display:none;position:fixed;inset:0;
+  background:rgba(0,0,0,.5);
+  justify-content:center;align-items:center;z-index:1000
 }
 .modal-box{
-  background:white;
-  padding:20px;
-  width:350px;
-  border-radius:10px;
+  background:white;padding:20px;width:380px;border-radius:10px
 }
-.close{float:right;cursor:pointer;color:red}
+.close{float:right;color:red;cursor:pointer}
 </style>
 </head>
 
@@ -107,34 +75,53 @@ button{
 <div class="auth-box">
 <h2 id="authTitle">Sign In</h2>
 
-<!-- SIGN IN -->
+<!-- LOGIN -->
 <div id="loginForm">
 <select id="lcountry">
 <option value="">Select Country</option>
 <option>Pakistan</option><option>USA</option><option>UK</option>
-<option>UAE</option><option>India</option><option>China</option>
-<option>Other</option>
+<option>UAE</option><option>China</option><option>Other</option>
 </select>
+
 <input id="lemail" placeholder="Email">
+
+<div class="field">
 <input id="lpass" type="password" placeholder="Password">
+<span onclick="togglePass('lpass')">👁</span>
+</div>
+
 <div class="forgot" onclick="forgot()">Forgot password?</div>
 <button onclick="login()">Sign In</button>
 </div>
 
-<!-- SIGN UP -->
+<!-- SIGNUP -->
 <div id="signupForm" style="display:none">
 <input id="name" placeholder="Full Name">
 <input id="email" placeholder="Email">
 <input id="mobile" placeholder="Mobile Number">
 <input id="cnic" placeholder="CNIC (Optional)">
+
 <select id="country">
 <option value="">Select Country</option>
 <option>Pakistan</option><option>USA</option><option>UK</option>
-<option>UAE</option><option>India</option><option>China</option>
-<option>Other</option>
+<option>UAE</option><option>China</option><option>Other</option>
 </select>
+
+<select id="role">
+<option value="customer">Customer</option>
+<option value="factory">Factory</option>
+</select>
+
+<div class="field">
 <input id="pass" type="password" placeholder="Password">
+<span onclick="togglePass('pass')">👁</span>
+</div>
+
+<div class="field">
 <input id="cpass" type="password" placeholder="Confirm Password">
+<span onclick="togglePass('cpass')">👁</span>
+</div>
+
 <button onclick="signup()">Create Account</button>
 </div>
 
@@ -151,104 +138,124 @@ My Account ▾
 </div>
 </div>
 
+<!-- FACTORY PROFILE -->
+<div class="modal" id="factoryModal">
+<div class="modal-box">
+<span class="close" onclick="factoryModal.style.display='none'">X</span>
+<h3>Complete Factory Profile</h3>
+<input id="fname" placeholder="Factory Name">
+<input id="owner" placeholder="Owner Name">
+<input id="phone" placeholder="Phone / WhatsApp">
+<input id="products" placeholder="Products">
+<input type="file" id="photo">
+<button onclick="saveFactory()">Save Profile</button>
+</div>
+</div>
+
 <!-- WEBSITE -->
 <div id="site">
+
 <header style="background:#0b3c5d;color:white;padding:20px;text-align:center">
 <h1>Sialkot Trade Hub</h1>
 <p>Sports & Hosiery Marketplace – Made in Sialkot</p>
 </header>
 
-<nav style="background:#133b5c;padding:10px;text-align:center">
-<a style="color:white;margin:0 10px;cursor:pointer" onclick="openProducts()">Products</a>
-<a style="color:white;margin:0 10px;cursor:pointer" onclick="openOrder()">Order</a>
-</nav>
+<div class="section">
+<h2>Registered Factories</h2>
+<div class="grid" id="factoryList"></div>
+</div>
+
+<div class="section">
+<h2>Sports & Hosiery Products</h2>
+<div class="grid">
+<div class="card"><h4>Footballs</h4><p>Export quality footballs</p></div>
+<div class="card"><h4>Cricket Gear</h4><p>Bats, pads, gloves</p></div>
+<div class="card"><h4>Sportswear</h4><p>Tracksuits & gym wear</p></div>
+<div class="card"><h4>Gloves</h4><p>Winter & work gloves</p></div>
+</div>
+</div>
 
 <footer style="background:#0b3c5d;color:white;text-align:center;padding:10px">
 © 2026 Sialkot Trade Hub | 03042249321
 </footer>
 </div>
 
-<!-- PRODUCTS -->
-<div class="modal" id="products">
-<div class="modal-box">
-<span class="close" onclick="closeModal('products')">X</span>
-<h3>Products</h3>
-<ul>
-<li>Sports Goods</li>
-<li>Hosiery Items</li>
-<li>Footballs</li>
-<li>Gloves</li>
-</ul>
-</div>
-</div>
-
-<!-- ORDER -->
-<div class="modal" id="order">
-<div class="modal-box">
-<span class="close" onclick="closeModal('order')">X</span>
-<h3>Order</h3>
-<input id="pname" placeholder="Product">
-<input id="qty" placeholder="Quantity">
-<button onclick="sendOrder()">Send Order</button>
-</div>
-</div>
-
 <script>
-let signupMode=false;
+let signupMode=false,currentUser=null;
 
-if(localStorage.getItem("user")) unlock();
+if(localStorage.getItem("user")){
+  currentUser=JSON.parse(localStorage.getItem("user"));
+  unlock();
+}
 
 function toggle(){
   signupMode=!signupMode;
   loginForm.style.display=signupMode?"none":"block";
   signupForm.style.display=signupMode?"block":"none";
   authTitle.innerText=signupMode?"Create Account":"Sign In";
-  document.querySelector(".switch").innerText=
-    signupMode?"Already have account? Sign In":"Create new account";
+}
+
+function togglePass(id){
+  let f=document.getElementById(id);
+  f.type=f.type==="password"?"text":"password";
 }
 
 function signup(){
-  if(pass.value!==cpass.value){alert("Passwords not match");return;}
-  localStorage.setItem("user",JSON.stringify({
-    name:name.value,email:email.value,pass:pass.value
-  }));
-  alert("Account created");
-  toggle();
+  if(pass.value!==cpass.value){alert("Password mismatch");return;}
+  currentUser={email:email.value,pass:pass.value,role:role.value};
+  localStorage.setItem("user",JSON.stringify(currentUser));
+  unlock();
 }
 
 function login(){
   let u=JSON.parse(localStorage.getItem("user"));
   if(!u||u.email!==lemail.value||u.pass!==lpass.value){
-    alert("Wrong details");return;
+    alert("Wrong login");return;
   }
-  unlock();
+  currentUser=u;unlock();
 }
 
 function unlock(){
   auth.style.display="none";
   site.style.display="block";
   account.style.display="block";
+  loadFactories();
+  if(currentUser.role==="factory" && !localStorage.getItem("factoryProfile")){
+    factoryModal.style.display="flex";
+  }
 }
 
-function logout(){
-  localStorage.removeItem("user");
-  location.reload();
+function saveFactory(){
+  let r=new FileReader();
+  r.onload=function(){
+    localStorage.setItem("factoryProfile",JSON.stringify({
+      name:fname.value,owner:owner.value,
+      phone:phone.value,products:products.value,
+      photo:r.result
+    }));
+    factoryModal.style.display="none";
+    loadFactories();
+  };
+  r.readAsDataURL(photo.files[0]);
 }
 
-function forgot(){
-  alert("Password reset link sent (demo)");
+function loadFactories(){
+  factoryList.innerHTML="";
+  let f=localStorage.getItem("factoryProfile");
+  if(!f)return;
+  let d=JSON.parse(f);
+  factoryList.innerHTML=`
+  <div class="card">
+    <img src="${d.photo}">
+    <h4>${d.name}</h4>
+    <p>${d.products}</p>
+    <p>${d.phone}</p>
+  </div>`;
 }
 
-function toggleMenu(){
-  menu.style.display=menu.style.display==="block"?"none":"block";
-}
-
-function openProducts(){products.style.display="flex";}
-function openOrder(){order.style.display="flex";}
-function closeModal(id){document.getElementById(id).style.display="none";}
-function sendOrder(){
-  window.open("https://wa.me/923042249321");
-}
+function forgot(){alert("Password reset demo")}
+function logout(){localStorage.clear();location.reload()}
+function toggleMenu(){menu.style.display=menu.style.display==="block"?"none":"block"}
 </script>
 
 </body>
