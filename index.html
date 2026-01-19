@@ -4,83 +4,85 @@
 <title>Sialkot Trade Hub</title>
 
 <style>
-body{
-  font-family:Arial;
-  margin:0;
-  background:white;
-}
+body{font-family:Arial;margin:0;background:white;}
+#site{display:none;}
 
-/* WEBSITE HIDDEN FIRST */
-#site{
-  display:none;
-}
-
-/* LOGIN SCREEN */
 .login-screen{
-  position:fixed;
-  top:0; left:0;
-  width:100%; height:100%;
+  position:fixed; inset:0;
   background:white;
-  display:flex;
-  justify-content:center;
-  align-items:center;
+  display:flex; justify-content:center; align-items:center;
+  z-index:1000;
 }
 
 .box{
-  width:350px;
-  padding:25px;
-  border:1px solid #ccc;
-  border-radius:10px;
+  width:360px; padding:25px;
+  border:1px solid #ccc; border-radius:10px;
 }
-h2{text-align:center;}
 
 input,select,button{
-  width:100%;
-  padding:10px;
-  margin:8px 0;
+  width:100%; padding:10px; margin:8px 0;
 }
 
 button{
-  background:#0b3c5d;
-  color:white;
-  border:none;
-  cursor:pointer;
+  background:#0b3c5d; color:white;
+  border:none; cursor:pointer;
 }
 
-.switch{
-  text-align:center;
-  color:#0b3c5d;
-  cursor:pointer;
-  margin-top:10px;
+.switch{text-align:center;color:#0b3c5d;cursor:pointer;}
+
+nav a{
+  color:white; margin:0 12px;
+  cursor:pointer; text-decoration:none;
 }
+
+/* POPUPS */
+.modal{
+  display:none;
+  position:fixed; inset:0;
+  background:rgba(0,0,0,.4);
+  justify-content:center; align-items:center;
+  z-index:2000;
+}
+.modal-box{
+  background:white; padding:20px;
+  width:380px; border-radius:10px;
+}
+.close{float:right;cursor:pointer;color:red;}
 </style>
 </head>
 
 <body>
 
-<!-- LOGIN SCREEN -->
+<!-- LOGIN -->
 <div class="login-screen" id="loginBox">
-  <div class="box">
-    <h2 id="title">Create Account</h2>
+<div class="box">
+<h2 id="title">Create Account</h2>
 
-    <input id="name" placeholder="Full Name">
-    <input id="email" placeholder="Email">
-    <input id="password" type="password" placeholder="Password">
+<input id="name" placeholder="Full Name">
+<input id="email" placeholder="Email">
+<input id="password" type="password" placeholder="Password">
 
-    <select id="role">
-      <option value="customer">Customer / Buyer</option>
-      <option value="factory">Factory / Seller</option>
-    </select>
+<select id="country">
+<option value="">Select Country</option>
+<option>Pakistan</option><option>India</option><option>China</option>
+<option>USA</option><option>UK</option><option>UAE</option>
+<option>Germany</option><option>France</option>
+<option>Turkey</option><option>Saudi Arabia</option>
+<option>Malaysia</option><option>Indonesia</option>
+<option>Other</option>
+</select>
 
-    <button onclick="submitForm()" id="btn">Sign Up</button>
+<select id="role">
+<option value="customer">Customer / Buyer</option>
+<option value="factory">Factory / Seller</option>
+</select>
 
-    <div class="switch" onclick="toggle()">
-      Already have account? Login
-    </div>
-  </div>
+<button onclick="submitForm()" id="btn">Sign Up</button>
+<div class="switch" onclick="toggle()">Already have account? Login</div>
+</div>
 </div>
 
-<!-- ACTUAL WEBSITE -->
+<!-- WEBSITE -->
 <div id="site">
 
 <header style="background:#0b3c5d;color:white;padding:20px;text-align:center;">
@@ -89,9 +91,9 @@ button{
 </header>
 
 <nav style="background:#133b5c;padding:10px;text-align:center;">
-<a href="#" style="color:white;margin:0 10px;">Home</a>
-<a href="#" style="color:white;margin:0 10px;">Products</a>
-<a href="#" style="color:white;margin:0 10px;">Order</a>
+<a onclick="hideAll()">Home</a>
+<a onclick="openProducts()">Products</a>
+<a onclick="openOrder()">Order</a>
 </nav>
 
 <section style="text-align:center;padding:30px;">
@@ -99,69 +101,92 @@ button{
 <p>Local & International Buyers Welcome</p>
 </section>
 
-<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:15px;padding:20px;">
-<div style="border:1px solid #ddd;padding:20px;text-align:center;">🏏 Sports Goods</div>
-<div style="border:1px solid #ddd;padding:20px;text-align:center;">👕 Hosiery Items</div>
-<div style="border:1px solid #ddd;padding:20px;text-align:center;">🌍 International Export</div>
-<div style="border:1px solid #ddd;padding:20px;text-align:center;">🏭 Direct From Factories</div>
-</div>
-
 <footer style="background:#0b3c5d;color:white;text-align:center;padding:10px;">
-© 2026 Sialkot Trade Hub
+© 2026 Sialkot Trade Hub | Contact: 03042249321
 </footer>
 
+</div>
+
+<!-- PRODUCTS POPUP -->
+<div class="modal" id="products">
+<div class="modal-box">
+<span class="close" onclick="closeModal('products')">X</span>
+<h3>Available Products</h3>
+<ul>
+<li>🏏 Sports Goods</li>
+<li>👕 Hosiery Items</li>
+<li>🧤 Gloves</li>
+<li>⚽ Footballs</li>
+<li>🥊 Boxing Equipment</li>
+</ul>
+</div>
+</div>
+
+<!-- ORDER POPUP -->
+<div class="modal" id="order">
+<div class="modal-box">
+<span class="close" onclick="closeModal('order')">X</span>
+<h3>Place Order</h3>
+<input id="pname" placeholder="Product Name">
+<input id="qty" type="number" placeholder="Quantity">
+<select id="ocountry">
+<option>Pakistan</option>
+<option>USA</option>
+<option>UK</option>
+<option>UAE</option>
+<option>Other</option>
+</select>
+<button onclick="sendOrder()">Submit Order</button>
+</div>
 </div>
 
 <script>
 let isLogin=false;
 
-// Auto login check
-if(localStorage.getItem("user")){
-  unlock();
-}
+if(localStorage.getItem("user")) unlock();
 
 function toggle(){
   isLogin=!isLogin;
-  document.getElementById("title").innerText=isLogin?"Login":"Create Account";
-  document.getElementById("name").style.display=isLogin?"none":"block";
-  document.getElementById("btn").innerText=isLogin?"Login":"Sign Up";
-  document.querySelector(".switch").innerText=
-    isLogin?"New user? Create account":"Already have account? Login";
+  title.innerText=isLogin?"Login":"Create Account";
+  name.style.display=isLogin?"none":"block";
+  btn.innerText=isLogin?"Login":"Sign Up";
 }
 
 function submitForm(){
-  let name=nameEl().value;
-  let email=emailEl().value;
-  let pass=passEl().value;
-  let role=roleEl().value;
-
+  let emailV=email.value, passV=password.value;
   if(isLogin){
     let u=JSON.parse(localStorage.getItem("user"));
-    if(!u || u.email!==email || u.password!==pass){
-      alert("Wrong login details");
-      return;
-    }
+    if(!u||u.email!==emailV||u.pass!==passV){alert("Wrong login");return;}
     unlock();
   }else{
-    if(!name||!email||!pass){
-      alert("Fill all fields");
-      return;
-    }
-    localStorage.setItem("user",JSON.stringify({name,email,password:pass,role}));
-    alert("Account created! Now login.");
+    if(!name.value||!emailV||!passV||!country.value){alert("Fill all");return;}
+    localStorage.setItem("user",JSON.stringify({
+      name:name.value,email:emailV,pass:passV,
+      role:role.value,country:country.value
+    }));
+    alert("Account created. Now login");
     toggle();
   }
 }
 
 function unlock(){
-  document.getElementById("loginBox").style.display="none";
-  document.getElementById("site").style.display="block";
+  loginBox.style.display="none";
+  site.style.display="block";
 }
 
-function nameEl(){return document.getElementById("name")}
-function emailEl(){return document.getElementById("email")}
-function passEl(){return document.getElementById("password")}
-function roleEl(){return document.getElementById("role")}
+/* POPUPS */
+function openProducts(){hideAll();products.style.display="flex";}
+function openOrder(){hideAll();order.style.display="flex";}
+function closeModal(id){document.getElementById(id).style.display="none";}
+function hideAll(){products.style.display="none";order.style.display="none";}
+
+function sendOrder(){
+  let msg=`Order Request
+Product: ${pname.value}
+Qty: ${qty.value}
+Country: ${ocountry.value}`;
+  window.open("https://wa.me/923042249321?text="+encodeURIComponent(msg));
+}
 </script>
 
 </body>
