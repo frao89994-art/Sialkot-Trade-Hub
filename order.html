@@ -1,7 +1,11 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Sialkot Trade Hub | Order & Invoice</title>
+<title>Sialkot Trade Hub | Order & PDF Invoice</title>
+
+<!-- jsPDF library -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
 <style>
 body{
   font-family:Arial;
@@ -10,7 +14,7 @@ body{
 }
 .container{
   background:white;
-  width:400px;
+  width:420px;
   margin:30px auto;
   padding:20px;
   border-radius:10px;
@@ -51,57 +55,88 @@ button{
 <option>UK</option>
 <option>Germany</option>
 <option>UAE</option>
+<option>Other</option>
 </select>
 
 <button onclick="generateInvoice()">Generate Invoice</button>
 
 <div id="invoice" class="invoice" style="display:none"></div>
 
-<button onclick="sendWhatsApp()">Send Order to Factory (WhatsApp)</button>
+<button onclick="downloadPDF()">⬇ Download PDF Invoice</button>
+<button onclick="sendWhatsApp()">📲 Send Order to Factory</button>
 </div>
 
 <script>
-let lastInvoice = {};
+let invoiceData = {};
 
 function generateInvoice(){
   let buyer = document.getElementById("buyer").value;
   let product = document.getElementById("product").value;
   let amount = parseFloat(document.getElementById("amount").value);
   let commissionPercent = parseFloat(document.getElementById("commission").value);
+  let country = document.getElementById("country").value;
 
   let commissionAmount = (amount * commissionPercent) / 100;
   let factoryAmount = amount - commissionAmount;
 
-  lastInvoice = {
-    buyer, product, amount, commissionAmount, factoryAmount
+  invoiceData = {
+    buyer, product, amount, commissionPercent,
+    commissionAmount, factoryAmount, country
   };
 
   document.getElementById("invoice").style.display="block";
   document.getElementById("invoice").innerHTML = `
   <h3>🧾 INVOICE</h3>
   <p><b>Buyer:</b> ${buyer}</p>
+  <p><b>Country:</b> ${country}</p>
   <p><b>Product:</b> ${product}</p>
   <p><b>Total Order:</b> $${amount}</p>
-  <p><b>Your Commission (${commissionPercent}%):</b> $${commissionAmount}</p>
+  <p><b>Commission (${commissionPercent}%):</b> $${commissionAmount}</p>
   <p><b>Payable to Factory:</b> $${factoryAmount}</p>
   <hr>
-  <p><b>Status:</b> Order Generated</p>
+  <p><b>Status:</b> Invoice Generated</p>
   `;
 }
 
+function downloadPDF(){
+  if(!invoiceData.amount){
+    alert("Please generate invoice first");
+    return;
+  }
+
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF();
+
+  doc.text("Sialkot Trade Hub", 20, 20);
+  doc.text("INVOICE", 20, 30);
+
+  doc.text(`Buyer: ${invoiceData.buyer}`, 20, 45);
+  doc.text(`Country: ${invoiceData.country}`, 20, 55);
+  doc.text(`Product: ${invoiceData.product}`, 20, 65);
+
+  doc.text(`Total Order: $${invoiceData.amount}`, 20, 80);
+  doc.text(`Commission (${invoiceData.commissionPercent}%): $${invoiceData.commissionAmount}`, 20, 90);
+  doc.text(`Payable to Factory: $${invoiceData.factoryAmount}`, 20, 100);
+
+  doc.text("Thank you for doing business with Sialkot Trade Hub", 20, 120);
+
+  doc.save("Sialkot_Invoice.pdf");
+}
+
 function sendWhatsApp(){
-  if(!lastInvoice.amount){
+  if(!invoiceData.amount){
     alert("Please generate invoice first");
     return;
   }
 
   let msg = `
 ORDER | Sialkot Trade Hub
-Buyer: ${lastInvoice.buyer}
-Product: ${lastInvoice.product}
-Total: $${lastInvoice.amount}
-Commission: $${lastInvoice.commissionAmount}
-Factory Payable: $${lastInvoice.factoryAmount}
+Buyer: ${invoiceData.buyer}
+Country: ${invoiceData.country}
+Product: ${invoiceData.product}
+Total: $${invoiceData.amount}
+Commission: $${invoiceData.commissionAmount}
+Factory Payable: $${invoiceData.factoryAmount}
 `;
 
   window.open(
