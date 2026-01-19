@@ -2,29 +2,79 @@
 <html>
 <head>
 <title>Sialkot Trade Hub</title>
-<link rel="stylesheet" href="style.css">
+
 <style>
-body{font-family:Arial;margin:0;background:#f4f4f4;}
+body{
+  font-family:Arial;
+  margin:0;
+  background:#f4f4f4;
+}
+header,nav,.hero,.cards,footer{
+  filter: blur(6px);
+  pointer-events:none;
+}
 header{background:#0b3c5d;color:white;padding:20px;text-align:center;}
 nav{background:#133b5c;padding:10px;text-align:center;}
 nav a{color:white;margin:0 10px;text-decoration:none;}
 .hero{text-align:center;padding:30px;background:white;}
 .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:15px;padding:20px;}
 .card{background:white;padding:20px;text-align:center;border-radius:8px;}
-section{background:white;margin:20px;padding:20px;border-radius:8px;}
 footer{background:#0b3c5d;color:white;text-align:center;padding:10px;}
-.contact-btn{
-  display:inline-block;
-  background:green;
+
+/* LOGIN POPUP */
+.popup{
+  position:fixed;
+  top:0;left:0;
+  width:100%;height:100%;
+  background:rgba(0,0,0,0.7);
+  display:flex;
+  justify-content:center;
+  align-items:center;
+}
+.box{
+  background:white;
+  width:350px;
+  padding:20px;
+  border-radius:10px;
+}
+input,select,button{
+  width:100%;
+  padding:10px;
+  margin:8px 0;
+}
+button{
+  background:#0b3c5d;
   color:white;
-  padding:10px 15px;
-  text-decoration:none;
-  border-radius:5px;
+  border:none;
+}
+.switch{
+  text-align:center;
+  color:#0b3c5d;
+  cursor:pointer;
 }
 </style>
 </head>
 
 <body>
+
+<!-- LOGIN POPUP -->
+<div class="popup" id="popup">
+  <div class="box">
+    <h2 id="title">Create Account</h2>
+
+    <input id="name" placeholder="Full Name">
+    <input id="email" placeholder="Email">
+    <input id="password" type="password" placeholder="Password">
+
+    <select id="role">
+      <option value="customer">Customer / Buyer</option>
+      <option value="factory">Factory / Seller</option>
+    </select>
+
+    <button onclick="submitForm()" id="btn">Sign Up</button>
+    <div class="switch" onclick="toggle()">Already have account? Login</div>
+  </div>
+</div>
 
 <header>
 <h1>Sialkot Trade Hub</h1>
@@ -32,10 +82,9 @@ footer{background:#0b3c5d;color:white;text-align:center;padding:10px;}
 </header>
 
 <nav>
-<a href="index.html">Home</a>
-<a href="marketplace.html">Products</a>
-<a href="login.html">Login</a>
-<a href="order.html">Order Online</a>
+<a href="#">Home</a>
+<a href="#">Products</a>
+<a href="#">Order</a>
 </nav>
 
 <section class="hero">
@@ -50,37 +99,57 @@ footer{background:#0b3c5d;color:white;text-align:center;padding:10px;}
 <div class="card">🏭 Direct From Factories</div>
 </div>
 
-<!-- FAQ SECTION -->
-<section>
-<h2>❓ Frequently Asked Questions (FAQ)</h2>
+<footer>© 2026 Sialkot Trade Hub</footer>
 
-<p><b>Q1: Kya international buyers order kar sakte hain?</b><br>
-✔ Ji haan, worldwide buyers welcome hain.</p>
+<script>
+let isLogin=false;
 
-<p><b>Q2: Order directly factory ko jata hai?</b><br>
-✔ Haan, order direct Sialkot factory ko forward hota hai.</p>
+if(localStorage.getItem("user")){
+  unlockSite();
+}
 
-<p><b>Q3: Commission kaise kaam karta hai?</b><br>
-✔ System automatically commission calculate karta hai.</p>
+function toggle(){
+  isLogin=!isLogin;
+  document.getElementById("title").innerText=isLogin?"Login":"Create Account";
+  document.getElementById("name").style.display=isLogin?"none":"block";
+  document.getElementById("btn").innerText=isLogin?"Login":"Sign Up";
+  document.querySelector(".switch").innerText=
+    isLogin?"New user? Create account":"Already have account? Login";
+}
 
-<p><b>Q4: Payment ka method kya hai?</b><br>
-✔ Currently manual & WhatsApp based (Online system coming soon).</p>
-</section>
+function submitForm(){
+  let name=document.getElementById("name").value;
+  let email=document.getElementById("email").value;
+  let pass=document.getElementById("password").value;
+  let role=document.getElementById("role").value;
 
-<!-- CONTACT SECTION -->
-<section>
-<h2>📞 Contact Us</h2>
-<p><b>Phone / WhatsApp:</b> 0304-2249321</p>
-<p>For bulk orders, factory registration & export queries</p>
+  if(isLogin){
+    let u=JSON.parse(localStorage.getItem("user"));
+    if(!u || u.email!==email || u.password!==pass){
+      alert("Wrong login details");
+      return;
+    }
+    unlockSite();
+  }else{
+    if(!name||!email||!pass){
+      alert("Fill all fields");
+      return;
+    }
+    localStorage.setItem("user",JSON.stringify({name,email,password:pass,role}));
+    alert("Account created! Now login.");
+    toggle();
+  }
+}
 
-<a class="contact-btn" href="https://wa.me/923042249321" target="_blank">
-💬 Chat on WhatsApp
-</a>
-</section>
-
-<footer>
-© 2026 Sialkot Trade Hub | Contact: 0304-2249321
-</footer>
+function unlockSite(){
+  document.getElementById("popup").style.display="none";
+  document.querySelectorAll("header,nav,.hero,.cards,footer")
+    .forEach(e=>{
+      e.style.filter="none";
+      e.style.pointerEvents="auto";
+    });
+}
+</script>
 
 </body>
 </html>
