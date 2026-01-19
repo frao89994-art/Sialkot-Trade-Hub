@@ -7,58 +7,59 @@
 body{
   font-family:Arial;
   margin:0;
-  background:#f4f4f4;
+  background:white;
 }
-header,nav,.hero,.cards,footer{
-  filter: blur(6px);
-  pointer-events:none;
-}
-header{background:#0b3c5d;color:white;padding:20px;text-align:center;}
-nav{background:#133b5c;padding:10px;text-align:center;}
-nav a{color:white;margin:0 10px;text-decoration:none;}
-.hero{text-align:center;padding:30px;background:white;}
-.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:15px;padding:20px;}
-.card{background:white;padding:20px;text-align:center;border-radius:8px;}
-footer{background:#0b3c5d;color:white;text-align:center;padding:10px;}
 
-/* LOGIN POPUP */
-.popup{
+/* WEBSITE HIDDEN FIRST */
+#site{
+  display:none;
+}
+
+/* LOGIN SCREEN */
+.login-screen{
   position:fixed;
-  top:0;left:0;
-  width:100%;height:100%;
-  background:rgba(0,0,0,0.7);
+  top:0; left:0;
+  width:100%; height:100%;
+  background:white;
   display:flex;
   justify-content:center;
   align-items:center;
 }
+
 .box{
-  background:white;
   width:350px;
-  padding:20px;
+  padding:25px;
+  border:1px solid #ccc;
   border-radius:10px;
 }
+h2{text-align:center;}
+
 input,select,button{
   width:100%;
   padding:10px;
   margin:8px 0;
 }
+
 button{
   background:#0b3c5d;
   color:white;
   border:none;
+  cursor:pointer;
 }
+
 .switch{
   text-align:center;
   color:#0b3c5d;
   cursor:pointer;
+  margin-top:10px;
 }
 </style>
 </head>
 
 <body>
 
-<!-- LOGIN POPUP -->
-<div class="popup" id="popup">
+<!-- LOGIN SCREEN -->
+<div class="login-screen" id="loginBox">
   <div class="box">
     <h2 id="title">Create Account</h2>
 
@@ -72,40 +73,51 @@ button{
     </select>
 
     <button onclick="submitForm()" id="btn">Sign Up</button>
-    <div class="switch" onclick="toggle()">Already have account? Login</div>
+
+    <div class="switch" onclick="toggle()">
+      Already have account? Login
+    </div>
   </div>
 </div>
 
-<header>
+<!-- ACTUAL WEBSITE -->
+<div id="site">
+
+<header style="background:#0b3c5d;color:white;padding:20px;text-align:center;">
 <h1>Sialkot Trade Hub</h1>
 <p>Sports & Hosiery Marketplace – Made in Sialkot</p>
 </header>
 
-<nav>
-<a href="#">Home</a>
-<a href="#">Products</a>
-<a href="#">Order</a>
+<nav style="background:#133b5c;padding:10px;text-align:center;">
+<a href="#" style="color:white;margin:0 10px;">Home</a>
+<a href="#" style="color:white;margin:0 10px;">Products</a>
+<a href="#" style="color:white;margin:0 10px;">Order</a>
 </nav>
 
-<section class="hero">
+<section style="text-align:center;padding:30px;">
 <h2>One Platform – All Sialkot Products</h2>
 <p>Local & International Buyers Welcome</p>
 </section>
 
-<div class="cards">
-<div class="card">🏏 Sports Goods</div>
-<div class="card">👕 Hosiery Items</div>
-<div class="card">🌍 International Export</div>
-<div class="card">🏭 Direct From Factories</div>
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:15px;padding:20px;">
+<div style="border:1px solid #ddd;padding:20px;text-align:center;">🏏 Sports Goods</div>
+<div style="border:1px solid #ddd;padding:20px;text-align:center;">👕 Hosiery Items</div>
+<div style="border:1px solid #ddd;padding:20px;text-align:center;">🌍 International Export</div>
+<div style="border:1px solid #ddd;padding:20px;text-align:center;">🏭 Direct From Factories</div>
 </div>
 
-<footer>© 2026 Sialkot Trade Hub</footer>
+<footer style="background:#0b3c5d;color:white;text-align:center;padding:10px;">
+© 2026 Sialkot Trade Hub
+</footer>
+
+</div>
 
 <script>
 let isLogin=false;
 
+// Auto login check
 if(localStorage.getItem("user")){
-  unlockSite();
+  unlock();
 }
 
 function toggle(){
@@ -118,10 +130,10 @@ function toggle(){
 }
 
 function submitForm(){
-  let name=document.getElementById("name").value;
-  let email=document.getElementById("email").value;
-  let pass=document.getElementById("password").value;
-  let role=document.getElementById("role").value;
+  let name=nameEl().value;
+  let email=emailEl().value;
+  let pass=passEl().value;
+  let role=roleEl().value;
 
   if(isLogin){
     let u=JSON.parse(localStorage.getItem("user"));
@@ -129,7 +141,7 @@ function submitForm(){
       alert("Wrong login details");
       return;
     }
-    unlockSite();
+    unlock();
   }else{
     if(!name||!email||!pass){
       alert("Fill all fields");
@@ -141,14 +153,15 @@ function submitForm(){
   }
 }
 
-function unlockSite(){
-  document.getElementById("popup").style.display="none";
-  document.querySelectorAll("header,nav,.hero,.cards,footer")
-    .forEach(e=>{
-      e.style.filter="none";
-      e.style.pointerEvents="auto";
-    });
+function unlock(){
+  document.getElementById("loginBox").style.display="none";
+  document.getElementById("site").style.display="block";
 }
+
+function nameEl(){return document.getElementById("name")}
+function emailEl(){return document.getElementById("email")}
+function passEl(){return document.getElementById("password")}
+function roleEl(){return document.getElementById("role")}
 </script>
 
 </body>
