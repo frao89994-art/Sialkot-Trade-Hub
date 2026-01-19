@@ -1,24 +1,118 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Login</title>
-<link rel="stylesheet" href="style.css">
-<script defer src="script.js"></script>
+<title>Sialkot Trade Hub | Login / Sign Up</title>
+
+<style>
+body{
+  font-family:Arial;
+  background:#0b3c5d;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  height:100vh;
+  margin:0;
+}
+.box{
+  background:white;
+  width:350px;
+  padding:20px;
+  border-radius:10px;
+}
+h2{text-align:center;}
+input,select,button{
+  width:100%;
+  padding:10px;
+  margin:8px 0;
+}
+button{
+  background:#0b3c5d;
+  color:white;
+  border:none;
+  cursor:pointer;
+}
+.switch{
+  text-align:center;
+  margin-top:10px;
+  cursor:pointer;
+  color:#0b3c5d;
+}
+</style>
 </head>
+
 <body>
 
-<h2>Login</h2>
+<div class="box">
+
+<h2 id="title">Create Account</h2>
+
+<input id="name" placeholder="Full Name">
+<input id="email" placeholder="Email">
+<input id="password" type="password" placeholder="Password">
 
 <select id="role">
-<option value="customer">Customer</option>
-<option value="factory">Factory</option>
+<option value="customer">Customer / Buyer</option>
+<option value="factory">Factory / Seller</option>
 </select>
 
-<input placeholder="Username">
-<input type="password" placeholder="Password">
+<button onclick="signup()" id="mainBtn">Sign Up</button>
 
-<button onclick="login()">Login</button>
+<div class="switch" onclick="toggle()">
+Already have account? Login
+</div>
+
+</div>
+
+<script>
+let isLogin = false;
+
+function toggle(){
+  isLogin = !isLogin;
+
+  document.getElementById("title").innerText =
+    isLogin ? "Login" : "Create Account";
+
+  document.getElementById("name").style.display =
+    isLogin ? "none" : "block";
+
+  document.getElementById("mainBtn").innerText =
+    isLogin ? "Login" : "Sign Up";
+
+  document.querySelector(".switch").innerText =
+    isLogin ? "New user? Create account" : "Already have account? Login";
+}
+
+function signup(){
+  let name = document.getElementById("name").value;
+  let email = document.getElementById("email").value;
+  let password = document.getElementById("password").value;
+  let role = document.getElementById("role").value;
+
+  if(isLogin){
+    let user = JSON.parse(localStorage.getItem("user"));
+
+    if(!user || user.email !== email || user.password !== password){
+      alert("Invalid login details");
+      return;
+    }
+
+    alert("Login successful!");
+    window.location.href = "index.html";
+  }
+  else{
+    if(!name || !email || !password){
+      alert("Please fill all fields");
+      return;
+    }
+
+    let user = {name,email,password,role};
+    localStorage.setItem("user",JSON.stringify(user));
+
+    alert("Account created! Please login.");
+    toggle();
+  }
+}
+</script>
 
 </body>
 </html>
-
