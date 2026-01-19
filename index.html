@@ -32,11 +32,16 @@ button{background:#0b3c5d;color:white;border:none;font-weight:bold;cursor:pointe
 .account{
   position:fixed;top:10px;right:10px;
   background:#0b3c5d;color:white;
-  padding:10px 15px;border-radius:20px;
-  cursor:pointer;display:none
+  padding:6px 12px;border-radius:25px;
+  cursor:pointer;display:none;
+  display:flex;align-items:center;gap:8px
+}
+.account img{
+  width:32px;height:32px;border-radius:50%;
+  object-fit:cover;border:2px solid #fff
 }
 .menu{
-  display:none;position:absolute;right:0;top:40px;
+  display:none;position:absolute;right:0;top:45px;
   background:white;color:black;border-radius:8px;
   box-shadow:0 5px 20px rgba(0,0,0,.2)
 }
@@ -50,10 +55,6 @@ button{background:#0b3c5d;color:white;border:none;font-weight:bold;cursor:pointe
   border:1px solid #ddd;padding:15px;
   border-radius:10px;background:#fafafa;text-align:center
 }
-.card img{
-  width:100%;height:140px;
-  object-fit:cover;border-radius:8px
-}
 </style>
 </head>
 
@@ -61,69 +62,62 @@ button{background:#0b3c5d;color:white;border:none;font-weight:bold;cursor:pointe
 
 <!-- AUTH -->
 <div class="auth" id="auth">
-  <div class="auth-box">
-    <h2 id="authTitle">Sign In</h2>
+<div class="auth-box">
+<h2 id="authTitle">Sign In</h2>
 
-    <div id="loginForm">
-      <select id="lcountry">
-        <option value="">Select Country</option>
-        <option>Pakistan</option><option>USA</option><option>UK</option>
-        <option>UAE</option><option>China</option><option>Other</option>
-      </select>
+<!-- LOGIN -->
+<div id="loginForm">
+<input id="lemail" placeholder="Email">
 
-      <input id="lemail" placeholder="Email">
+<div class="field">
+<input id="lpass" type="password" placeholder="Password">
+<span onclick="togglePass('lpass')">👁</span>
+</div>
 
-      <div class="field">
-        <input id="lpass" type="password" placeholder="Password">
-        <span onclick="togglePass('lpass')">👁</span>
-      </div>
+<div class="forgot" onclick="forgot()">Forgot password?</div>
+<button onclick="login()">Sign In</button>
+</div>
 
-      <div class="forgot" onclick="forgot()">Forgot password?</div>
-      <button onclick="login()">Sign In</button>
-    </div>
+<!-- SIGNUP -->
+<div id="signupForm" style="display:none">
+<input id="name" placeholder="Full Name">
+<input id="email" placeholder="Email">
 
-    <div id="signupForm" style="display:none">
-      <input id="name" placeholder="Full Name">
-      <input id="email" placeholder="Email">
-      <input id="mobile" placeholder="Mobile Number">
-      <input id="cnic" placeholder="CNIC (Optional)">
+<!-- ✅ PROFILE IMAGE -->
+<label style="font-size:13px">Profile Picture</label>
+<input type="file" id="profilePic" accept="image/*">
 
-      <select id="country">
-        <option value="">Select Country</option>
-        <option>Pakistan</option><option>USA</option><option>UK</option>
-        <option>UAE</option><option>China</option><option>Other</option>
-      </select>
+<select id="role">
+<option value="customer">Customer</option>
+<option value="factory">Factory</option>
+</select>
 
-      <select id="role">
-        <option value="customer">Customer</option>
-        <option value="factory">Factory</option>
-      </select>
+<div class="field">
+<input id="pass" type="password" placeholder="Password">
+<span onclick="togglePass('pass')">👁</span>
+</div>
 
-      <div class="field">
-        <input id="pass" type="password" placeholder="Password">
-        <span onclick="togglePass('pass')">👁</span>
-      </div>
+<div class="field">
+<input id="cpass" type="password" placeholder="Confirm Password">
+<span onclick="togglePass('cpass')">👁</span>
+</div>
 
-      <div class="field">
-        <input id="cpass" type="password" placeholder="Confirm Password">
-        <span onclick="togglePass('cpass')">👁</span>
-      </div>
+<button onclick="signup()">Create Account</button>
+</div>
 
-      <button onclick="signup()">Create Account</button>
-    </div>
-
-    <div class="switch" onclick="toggle()">Create new account</div>
-  </div>
+<div class="switch" onclick="toggle()">Create new account</div>
+</div>
 </div>
 
 <!-- ACCOUNT -->
 <div class="account" id="account" onclick="toggleMenu()">
-My Account ▾
+<img id="accImg" src="">
+<span>My Account ▾</span>
+
 <div class="menu" id="menu">
   <div onclick="location.href='factory-dashboard.html'">Factory Dashboard</div>
   <div onclick="location.href='marketplace.html'">Marketplace</div>
   <div onclick="location.href='faq.html'">FAQ</div>
-  <div onclick="forgot()">Forgot Password</div>
   <div onclick="logout()">Logout</div>
 </div>
 </div>
@@ -132,34 +126,22 @@ My Account ▾
 <div id="site">
 
 <header style="background:#0b3c5d;color:white;padding:20px;text-align:center">
-  <h1>Sialkot Trade Hub</h1>
-  <p>Sports & Hosiery Marketplace – Made in Sialkot</p>
+<h1>Sialkot Trade Hub</h1>
+<p>Sports & Hosiery Marketplace – Made in Sialkot</p>
 
-  <!-- ✅ HOME LINKS -->
-  <div style="margin-top:10px">
-    <a href="factory-dashboard.html" style="color:white;margin:0 10px">Factory Dashboard</a>
-    <a href="marketplace.html" style="color:white;margin:0 10px">Marketplace</a>
-    <a href="faq.html" style="color:white;margin:0 10px">FAQ</a>
-  </div>
+<div style="margin-top:10px">
+<a href="marketplace.html" style="color:white;margin:0 10px">Marketplace</a>
+<a href="faq.html" style="color:white;margin:0 10px">FAQ</a>
+</div>
 </header>
 
 <div class="section">
-  <h2>Registered Factories</h2>
-  <div class="grid" id="factoryList"></div>
-</div>
-
-<div class="section">
-  <h2>Sports & Hosiery Products</h2>
-  <div class="grid">
-    <div class="card"><h4>Footballs</h4><p>Export quality footballs</p></div>
-    <div class="card"><h4>Cricket Gear</h4><p>Bats, pads, gloves</p></div>
-    <div class="card"><h4>Sportswear</h4><p>Tracksuits & gym wear</p></div>
-    <div class="card"><h4>Gloves</h4><p>Winter & work gloves</p></div>
-  </div>
+<h2>Welcome</h2>
+<p>Login successful. Your profile image is shown in account menu.</p>
 </div>
 
 <footer style="background:#0b3c5d;color:white;text-align:center;padding:10px">
-© 2026 Sialkot Trade Hub | 03042249321
+© 2026 Sialkot Trade Hub
 </footer>
 
 </div>
@@ -186,9 +168,20 @@ function togglePass(id){
 
 function signup(){
   if(pass.value!==cpass.value){alert("Password mismatch");return;}
-  currentUser={email:email.value,pass:pass.value,role:role.value};
-  localStorage.setItem("user",JSON.stringify(currentUser));
-  unlock();
+
+  let reader=new FileReader();
+  reader.onload=function(){
+    let user={
+      email:email.value,
+      pass:pass.value,
+      role:role.value,
+      img:reader.result
+    };
+    localStorage.setItem("user",JSON.stringify(user));
+    currentUser=user;
+    unlock();
+  };
+  reader.readAsDataURL(profilePic.files[0]);
 }
 
 function login(){
@@ -196,13 +189,15 @@ function login(){
   if(!u||u.email!==lemail.value||u.pass!==lpass.value){
     alert("Wrong login");return;
   }
-  currentUser=u;unlock();
+  currentUser=u;
+  unlock();
 }
 
 function unlock(){
   auth.style.display="none";
   site.style.display="block";
-  account.style.display="block";
+  account.style.display="flex";
+  accImg.src=currentUser.img || "";
 }
 
 function forgot(){alert("Password reset demo")}
