@@ -23,6 +23,121 @@
 </select>
 
 <button onclick="placeOrder()">Send Order via WhatsApp</button>
+<!DOCTYPE html>
+<html>
+<head>
+<title>Sialkot Trade Hub | Order & Invoice</title>
+<style>
+body{
+  font-family:Arial;
+  background:#f4f4f4;
+  text-align:center;
+}
+.container{
+  background:white;
+  width:400px;
+  margin:30px auto;
+  padding:20px;
+  border-radius:10px;
+}
+input,select,button{
+  width:100%;
+  padding:10px;
+  margin:8px 0;
+}
+button{
+  background:#0b3c5d;
+  color:white;
+  border:none;
+  cursor:pointer;
+}
+.invoice{
+  background:#eef;
+  padding:15px;
+  margin-top:20px;
+  text-align:left;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+<h2>🛒 Place Order</h2>
+
+<input id="buyer" placeholder="Buyer Name">
+<input id="product" placeholder="Product Name">
+<input id="amount" type="number" placeholder="Total Order Amount ($)">
+<input id="commission" type="number" value="10" placeholder="Commission %">
+
+<select id="country">
+<option>Pakistan</option>
+<option>USA</option>
+<option>UK</option>
+<option>Germany</option>
+<option>UAE</option>
+</select>
+
+<button onclick="generateInvoice()">Generate Invoice</button>
+
+<div id="invoice" class="invoice" style="display:none"></div>
+
+<button onclick="sendWhatsApp()">Send Order to Factory (WhatsApp)</button>
+</div>
+
+<script>
+let lastInvoice = {};
+
+function generateInvoice(){
+  let buyer = document.getElementById("buyer").value;
+  let product = document.getElementById("product").value;
+  let amount = parseFloat(document.getElementById("amount").value);
+  let commissionPercent = parseFloat(document.getElementById("commission").value);
+
+  let commissionAmount = (amount * commissionPercent) / 100;
+  let factoryAmount = amount - commissionAmount;
+
+  lastInvoice = {
+    buyer, product, amount, commissionAmount, factoryAmount
+  };
+
+  document.getElementById("invoice").style.display="block";
+  document.getElementById("invoice").innerHTML = `
+  <h3>🧾 INVOICE</h3>
+  <p><b>Buyer:</b> ${buyer}</p>
+  <p><b>Product:</b> ${product}</p>
+  <p><b>Total Order:</b> $${amount}</p>
+  <p><b>Your Commission (${commissionPercent}%):</b> $${commissionAmount}</p>
+  <p><b>Payable to Factory:</b> $${factoryAmount}</p>
+  <hr>
+  <p><b>Status:</b> Order Generated</p>
+  `;
+}
+
+function sendWhatsApp(){
+  if(!lastInvoice.amount){
+    alert("Please generate invoice first");
+    return;
+  }
+
+  let msg = `
+ORDER | Sialkot Trade Hub
+Buyer: ${lastInvoice.buyer}
+Product: ${lastInvoice.product}
+Total: $${lastInvoice.amount}
+Commission: $${lastInvoice.commissionAmount}
+Factory Payable: $${lastInvoice.factoryAmount}
+`;
+
+  window.open(
+    "https://wa.me/923042249321?text="+encodeURIComponent(msg),
+    "_blank"
+  );
+}
+</script>
+
+</body>
+</html>
 
 </body>
 </html>
