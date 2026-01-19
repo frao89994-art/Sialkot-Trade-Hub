@@ -4,159 +4,180 @@
 <title>Sialkot Trade Hub</title>
 
 <style>
-body{font-family:Arial;margin:0;background:white;}
-#site{display:none;}
+body{
+  font-family:Arial;
+  margin:0;
+  background:#f5f6f8;
+}
+#site{display:none}
 
-.login-screen{
+/* LOGIN WRAPPER */
+.auth{
   position:fixed; inset:0;
   background:white;
-  display:flex; justify-content:center; align-items:center;
-  z-index:1000;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  z-index:999;
 }
-
-.box{
-  width:360px; padding:25px;
-  border:1px solid #ccc; border-radius:10px;
+.auth-box{
+  width:380px;
+  background:white;
+  padding:25px;
+  border-radius:12px;
+  box-shadow:0 10px 30px rgba(0,0,0,.1);
 }
+h2{text-align:center;margin-bottom:15px}
 
 input,select,button{
-  width:100%; padding:10px; margin:8px 0;
+  width:100%;
+  padding:10px;
+  margin:8px 0;
+  border-radius:6px;
+  border:1px solid #ccc;
 }
-
 button{
-  background:#0b3c5d; color:white;
-  border:none; cursor:pointer;
+  background:#0b3c5d;
+  color:white;
+  border:none;
+  cursor:pointer;
+  font-weight:bold;
+}
+.switch{
+  text-align:center;
+  margin-top:10px;
+  color:#0b3c5d;
+  cursor:pointer;
+}
+.forgot{
+  text-align:right;
+  font-size:13px;
+  color:#0b3c5d;
+  cursor:pointer;
 }
 
-.switch{text-align:center;color:#0b3c5d;cursor:pointer;}
-
-nav a{
-  color:white; margin:0 12px;
-  cursor:pointer; text-decoration:none;
-}
-
-/* ACCOUNT CORNER */
+/* ACCOUNT MENU */
 .account{
   position:fixed;
   top:10px; right:10px;
   background:#0b3c5d;
   color:white;
-  padding:10px;
-  border-radius:8px;
+  padding:10px 15px;
+  border-radius:20px;
   cursor:pointer;
-  z-index:3000;
   display:none;
 }
-.account-menu{
+.menu{
   display:none;
   position:absolute;
   right:0; top:40px;
   background:white;
   color:black;
-  border:1px solid #ccc;
-  border-radius:6px;
-  width:160px;
+  border-radius:8px;
+  box-shadow:0 5px 20px rgba(0,0,0,.2);
 }
-.account-menu div{
-  padding:10px;
+.menu div{
+  padding:10px 15px;
   cursor:pointer;
 }
-.account-menu div:hover{
-  background:#f0f0f0;
-}
+.menu div:hover{background:#eee}
 
-/* POPUPS */
+/* MODALS */
 .modal{
   display:none;
   position:fixed; inset:0;
   background:rgba(0,0,0,.4);
-  justify-content:center; align-items:center;
-  z-index:2000;
+  justify-content:center;
+  align-items:center;
 }
 .modal-box{
-  background:white; padding:20px;
-  width:380px; border-radius:10px;
+  background:white;
+  padding:20px;
+  width:350px;
+  border-radius:10px;
 }
-.close{float:right;cursor:pointer;color:red;}
+.close{float:right;cursor:pointer;color:red}
 </style>
 </head>
 
 <body>
 
-<!-- LOGIN -->
-<div class="login-screen" id="loginBox">
-<div class="box">
-<h2 id="title">Create Account</h2>
+<!-- AUTH -->
+<div class="auth" id="auth">
+<div class="auth-box">
+<h2 id="authTitle">Sign In</h2>
 
-<input id="name" placeholder="Full Name">
-<input id="email" placeholder="Email">
-<input id="password" type="password" placeholder="Password">
-
-<select id="country">
+<!-- SIGN IN -->
+<div id="loginForm">
+<select id="lcountry">
 <option value="">Select Country</option>
-<option>Pakistan</option><option>India</option><option>China</option>
-<option>USA</option><option>UK</option><option>UAE</option>
-<option>Germany</option><option>France</option>
-<option>Turkey</option><option>Saudi Arabia</option>
-<option>Malaysia</option><option>Indonesia</option>
+<option>Pakistan</option><option>USA</option><option>UK</option>
+<option>UAE</option><option>India</option><option>China</option>
 <option>Other</option>
 </select>
+<input id="lemail" placeholder="Email">
+<input id="lpass" type="password" placeholder="Password">
+<div class="forgot" onclick="forgot()">Forgot password?</div>
+<button onclick="login()">Sign In</button>
+</div>
 
-<select id="role">
-<option value="customer">Customer / Buyer</option>
-<option value="factory">Factory / Seller</option>
+<!-- SIGN UP -->
+<div id="signupForm" style="display:none">
+<input id="name" placeholder="Full Name">
+<input id="email" placeholder="Email">
+<input id="mobile" placeholder="Mobile Number">
+<input id="cnic" placeholder="CNIC (Optional)">
+<select id="country">
+<option value="">Select Country</option>
+<option>Pakistan</option><option>USA</option><option>UK</option>
+<option>UAE</option><option>India</option><option>China</option>
+<option>Other</option>
 </select>
+<input id="pass" type="password" placeholder="Password">
+<input id="cpass" type="password" placeholder="Confirm Password">
+<button onclick="signup()">Create Account</button>
+</div>
 
-<button onclick="submitForm()" id="btn">Sign Up</button>
-<div class="switch" onclick="toggle()">Already have account? Login</div>
+<div class="switch" onclick="toggle()">Create new account</div>
 </div>
 </div>
 
-<!-- ACCOUNT CORNER -->
-<div class="account" id="accountBox" onclick="toggleAccount()">
+<!-- ACCOUNT -->
+<div class="account" id="account" onclick="toggleMenu()">
 My Account ▾
-<div class="account-menu" id="accountMenu">
-  <div onclick="forgotPassword()">Forgot Password</div>
-  <div onclick="logout()">Logout</div>
+<div class="menu" id="menu">
+<div onclick="forgot()">Forgot Password</div>
+<div onclick="logout()">Logout</div>
 </div>
 </div>
 
 <!-- WEBSITE -->
 <div id="site">
-
-<header style="background:#0b3c5d;color:white;padding:20px;text-align:center;">
+<header style="background:#0b3c5d;color:white;padding:20px;text-align:center">
 <h1>Sialkot Trade Hub</h1>
 <p>Sports & Hosiery Marketplace – Made in Sialkot</p>
 </header>
 
-<nav style="background:#133b5c;padding:10px;text-align:center;">
-<a onclick="hideAll()">Home</a>
-<a onclick="openProducts()">Products</a>
-<a onclick="openOrder()">Order</a>
+<nav style="background:#133b5c;padding:10px;text-align:center">
+<a style="color:white;margin:0 10px;cursor:pointer" onclick="openProducts()">Products</a>
+<a style="color:white;margin:0 10px;cursor:pointer" onclick="openOrder()">Order</a>
 </nav>
 
-<section style="text-align:center;padding:30px;">
-<h2>One Platform – All Sialkot Products</h2>
-<p>Local & International Buyers Welcome</p>
-</section>
-
-<footer style="background:#0b3c5d;color:white;text-align:center;padding:10px;">
-© 2026 Sialkot Trade Hub | Contact: 03042249321
+<footer style="background:#0b3c5d;color:white;text-align:center;padding:10px">
+© 2026 Sialkot Trade Hub | 03042249321
 </footer>
-
 </div>
 
 <!-- PRODUCTS -->
 <div class="modal" id="products">
 <div class="modal-box">
 <span class="close" onclick="closeModal('products')">X</span>
-<h3>Available Products</h3>
+<h3>Products</h3>
 <ul>
-<li>🏏 Sports Goods</li>
-<li>👕 Hosiery Items</li>
-<li>🧤 Gloves</li>
-<li>⚽ Footballs</li>
-<li>🥊 Boxing Equipment</li>
+<li>Sports Goods</li>
+<li>Hosiery Items</li>
+<li>Footballs</li>
+<li>Gloves</li>
 </ul>
 </div>
 </div>
@@ -165,50 +186,48 @@ My Account ▾
 <div class="modal" id="order">
 <div class="modal-box">
 <span class="close" onclick="closeModal('order')">X</span>
-<h3>Place Order</h3>
-<input id="pname" placeholder="Product Name">
-<input id="qty" type="number" placeholder="Quantity">
-<select id="ocountry">
-<option>Pakistan</option><option>USA</option>
-<option>UK</option><option>UAE</option><option>Other</option>
-</select>
-<button onclick="sendOrder()">Submit Order</button>
+<h3>Order</h3>
+<input id="pname" placeholder="Product">
+<input id="qty" placeholder="Quantity">
+<button onclick="sendOrder()">Send Order</button>
 </div>
 </div>
 
 <script>
-let isLogin=false;
+let signupMode=false;
 
 if(localStorage.getItem("user")) unlock();
 
 function toggle(){
-  isLogin=!isLogin;
-  title.innerText=isLogin?"Login":"Create Account";
-  name.style.display=isLogin?"none":"block";
-  btn.innerText=isLogin?"Login":"Sign Up";
+  signupMode=!signupMode;
+  loginForm.style.display=signupMode?"none":"block";
+  signupForm.style.display=signupMode?"block":"none";
+  authTitle.innerText=signupMode?"Create Account":"Sign In";
+  document.querySelector(".switch").innerText=
+    signupMode?"Already have account? Sign In":"Create new account";
 }
 
-function submitForm(){
-  let emailV=email.value, passV=password.value;
-  if(isLogin){
-    let u=JSON.parse(localStorage.getItem("user"));
-    if(!u||u.email!==emailV||u.pass!==passV){alert("Wrong login");return;}
-    unlock();
-  }else{
-    if(!name.value||!emailV||!passV||!country.value){alert("Fill all");return;}
-    localStorage.setItem("user",JSON.stringify({
-      name:name.value,email:emailV,pass:passV,
-      role:role.value,country:country.value
-    }));
-    alert("Account created. Now login");
-    toggle();
+function signup(){
+  if(pass.value!==cpass.value){alert("Passwords not match");return;}
+  localStorage.setItem("user",JSON.stringify({
+    name:name.value,email:email.value,pass:pass.value
+  }));
+  alert("Account created");
+  toggle();
+}
+
+function login(){
+  let u=JSON.parse(localStorage.getItem("user"));
+  if(!u||u.email!==lemail.value||u.pass!==lpass.value){
+    alert("Wrong details");return;
   }
+  unlock();
 }
 
 function unlock(){
-  loginBox.style.display="none";
+  auth.style.display="none";
   site.style.display="block";
-  accountBox.style.display="block";
+  account.style.display="block";
 }
 
 function logout(){
@@ -216,29 +235,19 @@ function logout(){
   location.reload();
 }
 
-function forgotPassword(){
-  let u=JSON.parse(localStorage.getItem("user"));
-  alert("Password reset request sent to:\n"+u.email+"\n\n(Demo mode)");
+function forgot(){
+  alert("Password reset link sent (demo)");
 }
 
-/* ACCOUNT MENU */
-function toggleAccount(){
-  accountMenu.style.display=
-    accountMenu.style.display==="block"?"none":"block";
+function toggleMenu(){
+  menu.style.display=menu.style.display==="block"?"none":"block";
 }
 
-/* POPUPS */
-function openProducts(){hideAll();products.style.display="flex";}
-function openOrder(){hideAll();order.style.display="flex";}
+function openProducts(){products.style.display="flex";}
+function openOrder(){order.style.display="flex";}
 function closeModal(id){document.getElementById(id).style.display="none";}
-function hideAll(){products.style.display="none";order.style.display="none";}
-
 function sendOrder(){
-  let msg=`Order Request
-Product: ${pname.value}
-Qty: ${qty.value}
-Country: ${ocountry.value}`;
-  window.open("https://wa.me/923042249321?text="+encodeURIComponent(msg));
+  window.open("https://wa.me/923042249321");
 }
 </script>
 
