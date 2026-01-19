@@ -1,25 +1,20 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Sialkot Trade Hub | Order & PDF Invoice</title>
-
-<!-- jsPDF library -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-
+<title>Order | Sialkot Trade Hub</title>
 <style>
-body{
-  font-family:Arial;
-  background:#f4f4f4;
-  text-align:center;
-}
-.container{
+body{font-family:Arial;margin:0;background:#f4f4f4;}
+header,footer{background:#0b3c5d;color:white;text-align:center;padding:15px;}
+nav{background:#133b5c;padding:10px;text-align:center;}
+nav a{color:white;margin:0 10px;text-decoration:none;}
+.form{
   background:white;
-  width:420px;
+  max-width:400px;
   margin:30px auto;
   padding:20px;
-  border-radius:10px;
+  border-radius:8px;
 }
-input,select,button{
+input,button{
   width:100%;
   padding:10px;
   margin:8px 0;
@@ -28,123 +23,39 @@ button{
   background:#0b3c5d;
   color:white;
   border:none;
-  cursor:pointer;
-}
-.invoice{
-  background:#eef;
-  padding:15px;
-  margin-top:20px;
-  text-align:left;
 }
 </style>
 </head>
 
 <body>
 
-<div class="container">
-<h2>🛒 Place Order</h2>
-
-<input id="buyer" placeholder="Buyer Name">
-<input id="product" placeholder="Product Name">
-<input id="amount" type="number" placeholder="Total Order Amount ($)">
-<input id="commission" type="number" value="10" placeholder="Commission %">
-
-<select id="country">
-<option>Pakistan</option>
-<option>USA</option>
-<option>UK</option>
-<option>Germany</option>
-<option>UAE</option>
-<option>Other</option>
-</select>
-
-<button onclick="generateInvoice()">Generate Invoice</button>
-
-<div id="invoice" class="invoice" style="display:none"></div>
-
-<button onclick="downloadPDF()">⬇ Download PDF Invoice</button>
-<button onclick="sendWhatsApp()">📲 Send Order to Factory</button>
-</div>
-
 <script>
-let invoiceData = {};
-
-function generateInvoice(){
-  let buyer = document.getElementById("buyer").value;
-  let product = document.getElementById("product").value;
-  let amount = parseFloat(document.getElementById("amount").value);
-  let commissionPercent = parseFloat(document.getElementById("commission").value);
-  let country = document.getElementById("country").value;
-
-  let commissionAmount = (amount * commissionPercent) / 100;
-  let factoryAmount = amount - commissionAmount;
-
-  invoiceData = {
-    buyer, product, amount, commissionPercent,
-    commissionAmount, factoryAmount, country
-  };
-
-  document.getElementById("invoice").style.display="block";
-  document.getElementById("invoice").innerHTML = `
-  <h3>🧾 INVOICE</h3>
-  <p><b>Buyer:</b> ${buyer}</p>
-  <p><b>Country:</b> ${country}</p>
-  <p><b>Product:</b> ${product}</p>
-  <p><b>Total Order:</b> $${amount}</p>
-  <p><b>Commission (${commissionPercent}%):</b> $${commissionAmount}</p>
-  <p><b>Payable to Factory:</b> $${factoryAmount}</p>
-  <hr>
-  <p><b>Status:</b> Invoice Generated</p>
-  `;
-}
-
-function downloadPDF(){
-  if(!invoiceData.amount){
-    alert("Please generate invoice first");
-    return;
-  }
-
-  const { jsPDF } = window.jspdf;
-  const doc = new jsPDF();
-
-  doc.text("Sialkot Trade Hub", 20, 20);
-  doc.text("INVOICE", 20, 30);
-
-  doc.text(`Buyer: ${invoiceData.buyer}`, 20, 45);
-  doc.text(`Country: ${invoiceData.country}`, 20, 55);
-  doc.text(`Product: ${invoiceData.product}`, 20, 65);
-
-  doc.text(`Total Order: $${invoiceData.amount}`, 20, 80);
-  doc.text(`Commission (${invoiceData.commissionPercent}%): $${invoiceData.commissionAmount}`, 20, 90);
-  doc.text(`Payable to Factory: $${invoiceData.factoryAmount}`, 20, 100);
-
-  doc.text("Thank you for doing business with Sialkot Trade Hub", 20, 120);
-
-  doc.save("Sialkot_Invoice.pdf");
-}
-
-function sendWhatsApp(){
-  if(!invoiceData.amount){
-    alert("Please generate invoice first");
-    return;
-  }
-
-  let msg = `
-ORDER | Sialkot Trade Hub
-Buyer: ${invoiceData.buyer}
-Country: ${invoiceData.country}
-Product: ${invoiceData.product}
-Total: $${invoiceData.amount}
-Commission: $${invoiceData.commissionAmount}
-Factory Payable: $${invoiceData.factoryAmount}
-`;
-
-  window.open(
-    "https://wa.me/923042249321?text="+encodeURIComponent(msg),
-    "_blank"
-  );
+if(!localStorage.getItem("user")){
+  window.location.href="index.html";
 }
 </script>
+
+<header>
+<h2>Sialkot Trade Hub</h2>
+<p>Order Form</p>
+</header>
+
+<nav>
+<a href="index.html">Home</a>
+<a href="marketplace.html">Products</a>
+<a href="order.html">Order</a>
+</nav>
+
+<div class="form">
+<h3>Place Order</h3>
+<input placeholder="Buyer Name">
+<input placeholder="Product Name">
+<input placeholder="Quantity">
+<input placeholder="Country">
+<button>Submit Order</button>
+</div>
+
+<footer>© 2026 Sialkot Trade Hub</footer>
 
 </body>
 </html>
