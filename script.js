@@ -27,4 +27,29 @@ Commission: Rs ${commission}`;
     "_blank"
   );
 }
+/* ================= CONTACT FORM → WHATSAPP ================= */
+function sendMessage(){
+  let name = document.getElementById("name").value;
+  let email = document.getElementById("email").value;
+  let msg = document.getElementById("msg").value;
+
+  let whatsappURL =
+    "https://wa.me/923042249321?text=" +
+    encodeURIComponent(
+      "Name: " + name +
+      "\nEmail: " + email +
+      "\nMessage: " + msg
+    );
+
+  window.open(whatsappURL, "_blank");
+}
+
+/* ================= OPTIONAL: SMOOTH SCROLL ================= */
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+  anchor.addEventListener("click", function(e){
+    e.preventDefault();
+    document.querySelector(this.getAttribute("href"))
+    ?.scrollIntoView({behavior:"smooth"});
+  });
+});
 
